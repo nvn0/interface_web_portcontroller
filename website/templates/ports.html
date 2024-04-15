@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<h1 align="left">Abrir/Fechar portas:</h1>
+
+
+
+
+
+
+<form method="POST">
+<div id="parameters-section">
+	<label for="nome do container">Nome do container:</label>
+	<input type="text" id="name" name="name">
+	<br><br>
+	<label for="Type">Tipo:</label>
+	<select id="type" name="type">
+		<option value="lxc">LXC</option>
+		<option value="incus">Incus</option>
+	</select>
+	<br><br>
+	<label for="Action">Ação:</label>
+	<select id="action" name="action">
+		<option value="openPort">Open Port</option>
+		<option value="ClosePort">Close Port</option>
+	</select>
+	<br><br>
+	<label for="w">FireWall:</label>
+	<select id="fw" name="fw">
+		<option value="ipt">IpTables</option>
+		<option value="nft">Nftables</option>
+	</select>
+	<br><br>
+	<label for="Protocol">Protocolo:</label>
+	<select id="protocol" name="protocol">
+		<option value="tcp">TCP</option>
+		<option value="udp">UDP</option>
+	</select>
+	<br><br>
+	<label for="Port">Porta:</label>
+	<input type="text" id="port" name="port">
+	<br><br>
+	<button type="submit" id="dados" class="btn btn-primary">Enviar Dados</button>
+</div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<h1 align="left">Containers:</h1>
+
+
+
+
+
+<form method="POST">
+<div id="parameters-section">
+    <p><strong>Nome:</strong> <span id="name">{{ nome }}</span></p>
+    <p><strong>Estado:</strong> <span id="status">{{ estado }}</span></p>
+    <p><strong>Portas abertas:</strong> <span id="ports">{{ portas }}</span></p>
+	<br><br>
+	<label for="Type">Tipo:</label>
+	<select id="type" name="type">
+		<option value="lxc">LXC</option>
+		<option value="incus">Incus</option>
+	</select>
+	<br>
+    <textarea name="nome" id="nome" class="form-control" placeholder="Digiteo nome do container "></textarea>
+	<br>
+    <button type="submit" class="btn btn-primary">Ver Info</button>
+</div>
+</form>
+
+{% endblock %}
