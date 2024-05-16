@@ -9,11 +9,27 @@ from string import ascii_uppercase
 
 views = Blueprint('views', __name__)
 
+pedidos = {}
+
+@views.route('/requestforport', methods=['GET', 'POST'])
+def req_for_port():
 
 
 
+    if request.method == 'POST':
+        protocol = request.form.get('protocol')
+        int_port = request.form.get('int_port')
+        int_ip = request.form.get('int_ip')
+        
+        print(protocol)
+        print(int_port)
+        print(int_ip)
 
+        pedidos[len(pedidos)+1] = [protocol, int_port, int_ip]
 
+        return '<h2>Pedido realizado com sucesso</h2>'
+
+    return render_template('reqforport.html')
 
 
 @views.route('/', methods=['GET', 'POST'])
@@ -52,30 +68,30 @@ def home():
 
 
 
-@views.route('/ports', methods=['GET', 'POST'])
+@views.route('/ports', methods=['GET', 'POST']) # funcional para interagir com a função hostnat do unixsocket
 @login_required
 def ports():
 
     if request.method == 'POST':
-        name = request.form.get('name')
-        type = request.form.get('type')
+        
         action = request.form.get('action')
         fw = request.form.get('fw')
         protocol= request.form.get('protocol')
-        port = request.form.get('port')
+        ext_port = request.form.get('ext_port')
+        int_port = request.form.get('int_port')
+        int_ip = request.form.get('int_ip')
         
         
-        
-        print(name)
-        print(type)
         print(action)
         print(fw)
         print(protocol)
-        print(port)
+        print(ext_port)
+        print(int_port)
+        print(int_ip)
         
-        #sendPort(name, type, action, fw, protocol, port)
+        #hostnat(action, fw, protocol, ext_port, int_ip, int_port)
 
-    return render_template('ports.html', user=current_user)
+    return render_template('ports.html', dicionario=pedidos , user=current_user)
 
 
 
