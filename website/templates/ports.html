@@ -1,89 +1,104 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
-<h1 align="left">Abrir/Fechar portas:</h1>
 
-<style>
-	.right-container {
-		display: flex;
-		justify-content: flex-end;
-	}
+<head>
+	<style>
+		.left-container {
+			margin-top: 0;
+			margin: 0;
+			padding: 0;
+			float: left;
+			width: 50%;
+			/* Ajuste conforme necessário */
+		}
 
-	.item-list {
-		list-style-type: none;
-		padding: 0;
-		margin: 0;
-	}
+		.right-container {
+			display: flex;
+			justify-content: flex-end;
+			float: right;
+		}
 
-	.item-list li {
-		margin: 5px 0;
-	}
-</style>
+		.item-list {
+			list-style-type: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.item-list li {
+			margin: 5px 0;
+		}
+	</style>
 </head>
 
-
-
-
-<form method="POST">
-	<div id="parameters-section">
-
-
-		<div class="right-container">
-			<div>
-				<h1>Lista de pedidos</h1>
-				<ul class="item-list">
-					{% for chave, valores in dicionario.items() %}
-					<li>
-						<strong>Pedido nº {{ chave }}:</strong>
-						<ul>
-							<li>Protocolo: {{ valores[0] }}</li>
-							<li>Porta interna do container: {{ valores[1] }}</li>
-							<li>IP interno do container: {{ valores[2] }}</li>
-						</ul>
-					</li>
-					{% endfor %}
+<div class="right-container">
+	<div>
+		<h1>Lista de pedidos</h1>
+		<ul class="item-list">
+			{% for chave, valores in dicionario.items() %}
+			<li>
+				<strong>Pedido nº {{ chave }}:</strong>
+				<ul>
+					<li>Protocolo: {{ valores[0] }}</li>
+					<li>Porta interna do container: {{ valores[1] }}</li>
+					<li>IP interno do container: {{ valores[2] }}</li>
 				</ul>
-			</div>
-		</div>
-
-
-
-		<br><br>
-		<label for="Action">Ação:</label>
-		<select id="action" name="action">
-			<option value="openPort">Open Port</option>
-			<option value="ClosePort">Close Port</option>
-			<option value="AddNat">Add Nat</option>
-			<option value="RemoveNat">Remove Nat</option>
-		</select>
-		<br><br>
-		<label for="w">FireWall:</label>
-		<select id="fw" name="fw">
-			<option value="ipt">IpTables</option>
-			<option value="nft">Nftables</option>
-			<option value="lxdforward">LXD Forward</option>
-			<option value="lxdapi">LXD API</option>
-		</select>
-		<br><br>
-		<label for="Protocol">Protocolo:</label>
-		<select id="protocol" name="protocol">
-			<option value="tcp">TCP</option>
-			<option value="udp">UDP</option>
-		</select>
-		<br><br>
-		<label for="ext_Port">Porta externa:</label>
-		<input type="text" id="ent_port" name="ext_port" required>
-		<br><br>
-		<label for="Int_port">Porta interna do container:</label>
-		<input type="text" id="int_port" name="int_port" required>
-		<br><br>
-		<label for="Int_IP">IP interno do container:</label>
-		<input type="text" id="int_ip" name="int_ip"
-			pattern="^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}$"
-			required>
-		<br><br>
-		<button type="submit" id="dados" class="btn btn-primary">Enviar Dados</button>
+			</li>
+			{% endfor %}
+		</ul>
 	</div>
-</form>
+</div>
+
+<div class="left-container">
+
+	<h1 align="left">Abrir/Fechar portas:</h1>
+
+	<form method="POST">
+		<div id="parameters-section">
+
+
+
+			<br><br>
+			<label for="Action">Ação:</label>
+			<select id="action" name="action">
+				<option value="openPort">Open Port</option>
+				<option value="ClosePort">Close Port</option>
+				<option value="AddNat">Add Nat</option>
+				<option value="RemoveNat">Remove Nat</option>
+			</select>
+			<br><br>
+			<label for="w">FireWall:</label>
+			<select id="fw" name="fw">
+				<option value="ipt">IpTables</option>
+				<option value="nft">Nftables</option>
+				<option value="lxdforward">LXD Forward</option>
+				<option value="lxdapi">LXD API</option>
+			</select>
+			<br><br>
+			<label for="Protocol">Protocolo:</label>
+			<select id="protocol" name="protocol">
+				<option value="tcp">TCP</option>
+				<option value="udp">UDP</option>
+			</select>
+			<br><br>
+			<label for="ext_Port">Porta externa:</label>
+			<input type="text" id="ent_port" name="ext_port" required>
+			<br><br>
+			<label for="Int_port">Porta interna do container:</label>
+			<input type="text" id="int_port" name="int_port" required>
+			<br><br>
+			<label for="Int_IP">IP interno do container:</label>
+			<input type="text" id="int_ip" name="int_ip"
+				pattern="^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}$"
+				required>
+			<br><br>
+			<label for="Key_to_remove">Numero da lista a ser removido:</label>
+			<input type="number" id="key_to_remove" name="key_to_remove">
+			<br><br>
+			<button type="submit" id="dados" class="btn btn-primary">Enviar Dados</button>
+		</div>
+	</form>
+</div>
+
 
 
 <script>

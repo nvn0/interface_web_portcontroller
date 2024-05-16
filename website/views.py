@@ -10,10 +10,11 @@ from string import ascii_uppercase
 views = Blueprint('views', __name__)
 
 pedidos = {}
+count = 0
 
 @views.route('/requestforport', methods=['GET', 'POST'])
 def req_for_port():
-
+    global count
 
 
     if request.method == 'POST':
@@ -25,11 +26,23 @@ def req_for_port():
         print(int_port)
         print(int_ip)
 
-        pedidos[len(pedidos)+1] = [protocol, int_port, int_ip]
+        #pedidos[len(pedidos)+2] = [protocol, int_port, int_ip]
+        pedidos[count+1] = [protocol, int_port, int_ip]
+        count += 1
 
         return '<h2>Pedido realizado com sucesso</h2>'
 
     return render_template('reqforport.html')
+
+
+
+def remove_item(chave):
+    print(pedidos)
+    if chave in pedidos.keys():
+        del pedidos[chave]
+    print(pedidos)
+
+
 
 
 @views.route('/', methods=['GET', 'POST'])
@@ -80,8 +93,12 @@ def ports():
         ext_port = request.form.get('ext_port')
         int_port = request.form.get('int_port')
         int_ip = request.form.get('int_ip')
+        chave = request.form.get('key_to_remove')
         
         
+
+        remove_item(int(chave))
+
         print(action)
         print(fw)
         print(protocol)
@@ -90,6 +107,7 @@ def ports():
         print(int_ip)
         
         #hostnat(action, fw, protocol, ext_port, int_ip, int_port)
+        return render_template('ports.html', dicionario=pedidos , user=current_user)
 
     return render_template('ports.html', dicionario=pedidos , user=current_user)
 
