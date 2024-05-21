@@ -91,6 +91,7 @@ def ports():
         fw = request.form.get('fw')
         protocol= request.form.get('protocol')
         ext_port = request.form.get('ext_port')
+        ext_ip = request.form.get('ext_ip')
         int_port = request.form.get('int_port')
         int_ip = request.form.get('int_ip')
         chave = request.form.get('key_to_remove')
@@ -103,10 +104,11 @@ def ports():
         print(fw)
         print(protocol)
         print(ext_port)
+        print(ext_ip)
         print(int_port)
         print(int_ip)
         
-        #hostnat(action, fw, protocol, ext_port, int_ip, int_port)
+        #hostnat(action, fw, protocol, ext_port, ext_ip, int_ip, int_port)
         return render_template('ports.html', dicionario=pedidos , user=current_user)
 
     return render_template('ports.html', dicionario=pedidos , user=current_user)

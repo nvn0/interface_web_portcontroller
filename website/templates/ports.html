@@ -81,7 +81,12 @@
 			</select>
 			<br><br>
 			<label for="ext_Port">Porta externa:</label>
-			<input type="text" id="ent_port" name="ext_port" required>
+			<input type="text" id="ext_port" name="ext_port" required>
+			<br><br>
+			<label for="Ext_IP">IP externo para atribuir ao container:</label>
+			<input type="text" id="ext_ip" name="ext_ip"
+				pattern="^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}$"
+				required>
 			<br><br>
 			<label for="Int_port">Porta interna do container:</label>
 			<input type="text" id="int_port" name="int_port" required>
@@ -107,16 +112,22 @@
 		const fw = document.getElementById("fw").value;
 		const protocol = document.getElementById("protocol").value;
 		const extPort = document.getElementById("ext_port").value;
+		const extIp = document.getElementById("ext_ip").value;
 		const intPort = document.getElementById("int_port").value;
 		const intIp = document.getElementById("int_ip").value;
 
-		if (!action || !fw || !protocol || !extPort || !intPort || !intIp) {
+		if (!action || !fw || !protocol || !extPort || !extIp || !intPort || !intIp) {
 			alert("Todos os campos devem ser preenchidos!");
 			return false;
 		}
 
 		const ipPattern = /^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}$/;
 		if (!ipPattern.test(intIp)) {
+			alert("Por favor, insira um endereço IP válido.");
+			return false;
+		}
+
+		if (!ipPattern.test(extIp)) {
 			alert("Por favor, insira um endereço IP válido.");
 			return false;
 		}
