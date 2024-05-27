@@ -38,9 +38,12 @@ def req_for_port():
 
 def remove_item(chave):
     print(pedidos)
-    if chave in pedidos.keys():
-        del pedidos[chave]
-    print(pedidos)
+    try:
+        if chave in pedidos.keys():
+            del pedidos[chave]
+        print(pedidos)
+    except:
+        print("Erro - Nao foi possivel remover o pedido")
 
 
 
@@ -97,8 +100,11 @@ def ports():
         chave = request.form.get('key_to_remove')
         
         
+        try:
+            remove_item(int(chave))
+        except:
+            print("Erro não foi recebido nenhum valor para remover da lista de pedidos")
 
-        remove_item(int(chave))
 
         print(action)
         print(fw)
@@ -109,11 +115,45 @@ def ports():
         print(int_ip)
         
         #hostnat(action, fw, protocol, ext_port, ext_ip, int_ip, int_port)
-        return render_template('ports.html', dicionario=pedidos , user=current_user)
+        return redirect(url_for('views.ports', dicionario=pedidos , user=current_user))
 
     return render_template('ports.html', dicionario=pedidos , user=current_user)
 
 
+
+
+
+
+
+@views.route('/firewall', methods=['GET', 'POST']) # funcional para interagir com a função hostnat do unixsocket
+@login_required
+def firewall():
+
+    if request.method == 'POST':
+        
+        action = request.form.get('action')
+        fw = request.form.get('fw')
+        protocol= request.form.get('protocol')
+        port = request.form.get('port')
+       
+    
+        
+        
+
+       
+
+        print(action)
+        print(fw)
+        print(protocol)
+        print(port)
+        print(type(port))
+       
+        #hostfw(action, fw, protocol, port)
+    
+        return redirect(url_for('views.firewall', user=current_user))
+        
+
+    return render_template('firewall.html', user=current_user)
 
 
 

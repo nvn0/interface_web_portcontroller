@@ -50,7 +50,7 @@
 
 <div class="left-container">
 
-	<h1 align="left">Abrir/Fechar portas:</h1>
+	<h1 align="left">Abrir/Fechar portas de containers:</h1>
 
 	<form method="POST">
 		<div id="parameters-section">
@@ -59,9 +59,7 @@
 
 			<br><br>
 			<label for="Action">Ação:</label>
-			<select id="action" name="action">
-				<option value="openPort">Open Port</option>
-				<option value="ClosePort">Close Port</option>
+			<select id="action" name="action" onchange="updateFirewallOptions()">
 				<option value="AddNat">Add Nat</option>
 				<option value="RemoveNat">Remove Nat</option>
 			</select>
@@ -133,6 +131,44 @@
 		}
 
 		return true;
+	}
+
+
+
+
+
+
+	function updateFirewallOptions() {
+		const actionSelect = document.getElementById('action');
+		const fwSelect = document.getElementById('fw');
+
+		if (actionSelect.value === 'RemoveNat') {
+			// Clear all existing options
+			fwSelect.innerHTML = '';
+
+			// Add the only allowed option
+			const option = document.createElement('option');
+			option.value = 'lxdapi';
+			option.text = 'LXD API';
+			fwSelect.add(option);
+		} else {
+			// Reset to all options if other action is selected
+			fwSelect.innerHTML = '';
+
+			const options = [
+				{ value: 'ipt', text: 'IpTables' },
+				{ value: 'nft', text: 'Nftables' },
+				{ value: 'lxdforward', text: 'LXD Forward' },
+				{ value: 'lxdapi', text: 'LXD API' }
+			];
+
+			for (const opt of options) {
+				const option = document.createElement('option');
+				option.value = opt.value;
+				option.text = opt.text;
+				fwSelect.add(option);
+			}
+		}
 	}
 </script>
 
