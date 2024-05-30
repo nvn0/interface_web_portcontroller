@@ -1,69 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário com HTMX</title>
-    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
-</head>
-
-<body>
-
-    <h1>Pedido de abertura de porta do container</h1>
-
-    <form method="POST" hx-post="/requestforport" hx-target="#parameters-section">
-        <div id="parameters-section">
-
-            <label for="protocol">Protocol:</label>
-            <select id="protocol" name="protocol" required>
-                <option value="tcp">tcp</option>
-                <option value="udp">udp</option>
-            </select>
-            <br><br>
-            <label for="int_port">Porta interna do container que quer abrir:</label>
-            <input type="number" id="int_port" name="int_port" placeholder="Porta interna do container" min="1"
-                max="65535" required value="">
-            <br><br>
-            <label for="int_ip">IP interno do container:</label>
-            <input type="text" name="int_ip" id="int_ip" placeholder="Digite o endereço IP interno do container"
-                pattern="^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}$"
-                required>
-            <br><br>
-            <button type="submit">Enviar pedido</button>
-        </div>
-    </form>
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
 
 
-    <script>
-        function validateForm() {
-            var protocol = document.getElementById("protocol").value;
-            var intPort = document.getElementById("int_port").value;
-            var intIp = document.getElementById("int_ip").value;
 
-            if (!protocol || !intPort || !intIp) {
-                alert("Todos os campos devem ser preenchidos!");
-                return false;
-            }
+<h1>Pedido de abertura de porta do container</h1>
 
-            // Verificação adicional para o IP usando regex
-            var ipPattern = /^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}$/;
-            if (!ipPattern.test(intIp)) {
-                alert("Por favor, insira um endereço IP válido.");
-                return false;
-            }
+<form method="POST" hx-post="/requestforport" hx-target="#parameters-section">
+    <div id="parameters-section">
 
-            return true;
+        <label for="protocol">Protocol:</label>
+        <select id="protocol" name="protocol" required>
+            <option value="tcp">tcp</option>
+            <option value="udp">udp</option>
+        </select>
+        <br><br>
+        <label for="int_port">Porta interna do container que quer abrir:</label>
+        <input type="number" id="int_port" name="int_port" placeholder="Porta interna do container" min="1" max="65535"
+            required value="">
+        <br><br>
+        <label for="int_ip">IP interno do container:</label>
+        <input type="text" name="int_ip" id="int_ip" placeholder="Digite o endereço IP interno do container"
+            pattern="^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}$"
+            required>
+        <br><br>
+        <button type="submit" class="btn btn-primary">Enviar pedido</button>
+    </div>
+</form>
+
+
+<script>
+    function validateForm() {
+        var protocol = document.getElementById("protocol").value;
+        var intPort = document.getElementById("int_port").value;
+        var intIp = document.getElementById("int_ip").value;
+
+        if (!protocol || !intPort || !intIp) {
+            alert("Todos os campos devem ser preenchidos!");
+            return false;
         }
 
+        // Verificação adicional para o IP usando regex
+        var ipPattern = /^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}$/;
+        if (!ipPattern.test(intIp)) {
+            alert("Por favor, insira um endereço IP válido.");
+            return false;
+        }
 
-        // Função para limpar o formulário ao carregar a página
-        window.onload = function () {
-            document.getElementById("protocol").selectedIndex = 0;
-            document.getElementById("int_port").value = "";
-            document.getElementById("int_ip").value = "";
-        };
-    </script>
-</body>
+        return true;
+    }
 
-</html>
+
+    // Função para limpar o formulário ao carregar a página
+    window.onload = function () {
+        document.getElementById("protocol").selectedIndex = 0;
+        document.getElementById("int_port").value = "";
+        document.getElementById("int_ip").value = "";
+    };
+</script>
+
+
+{% endblock %}

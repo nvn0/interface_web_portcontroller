@@ -30,9 +30,10 @@ def req_for_port():
         pedidos[count+1] = [protocol, int_port, int_ip]
         count += 1
 
-        return '<h2>Pedido realizado com sucesso</h2>'
+        flash('Pedido efetuado com sucesso', category='success')
+        return redirect(url_for('views.req_for_port', user=current_user))
 
-    return render_template('reqforport.html')
+    return render_template('reqforport.html', user=current_user)
 
 
 
@@ -74,7 +75,7 @@ def home():
 
         #print(jsonify({'status': 'success', 'message': 'Dados recebidos com sucesso!'}))
     
-        return render_template('home.html', nome=cname, estado=estado, portas=portas, user=current_user)
+        return redirect(url_for('views.home.', nome=cname, estado=estado, portas=portas, user=current_user))
     
  
     
