@@ -6,6 +6,8 @@ import random
 from string import ascii_uppercase
 
 #from unixSocket import *
+#from teams_dm_req import *
+#from discord_dm import *
 
 views = Blueprint('views', __name__)
 
@@ -21,13 +23,18 @@ def req_for_port():
         protocol = request.form.get('protocol')
         int_port = request.form.get('int_port')
         int_ip = request.form.get('int_ip')
+
+        teamsid = request.form.get('teams_id')
+        discordid = request.form.get('discord_id')
         
         print(protocol)
         print(int_port)
         print(int_ip)
-
+        print(teamsid)
+        print(discordid)
         #pedidos[len(pedidos)+2] = [protocol, int_port, int_ip]
-        pedidos[count+1] = [protocol, int_port, int_ip]
+        pedidos[count+1] = [protocol, int_port, int_ip, teamsid, discordid]
+        print(pedidos)
         count += 1
 
         flash('Pedido efetuado com sucesso', category='success')
@@ -37,7 +44,15 @@ def req_for_port():
 
 
 
+def notificar(chave):
+    try:
+        Send_dm_teams(pedidos[chave][4])
+        Send_dm_discord(pedidos[chave][5])
+    except:
+        print("Erro - Nao foi possivel enviar notificação")
+
 def remove_item(chave):
+    notificar(chave)
     print(pedidos)
     try:
         if chave in pedidos.keys():
