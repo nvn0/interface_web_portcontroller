@@ -5,7 +5,7 @@ import json
 import random
 from string import ascii_uppercase
 
-#from unixSocket import *
+#from unixSocketConn import *
 #from teams_dm_req import *
 #from discord_dm import *
 
