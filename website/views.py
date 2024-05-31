@@ -51,8 +51,9 @@ def notificar(chave):
     except:
         print("Erro - Nao foi possivel enviar notificação")
 
+
+
 def remove_item(chave):
-    notificar(chave)
     print(pedidos)
     try:
         if chave in pedidos.keys():
@@ -100,9 +101,9 @@ def home():
 
 
 
-@views.route('/ports', methods=['GET', 'POST']) # funcional para interagir com a função hostnat do unixsocket
+@views.route('/nat', methods=['GET', 'POST']) # funcional para interagir com a função hostnat do unixsocket
 @login_required
-def ports():
+def nat():
 
     if request.method == 'POST':
         
@@ -117,6 +118,7 @@ def ports():
         
         
         try:
+            notificar(int(chave))
             remove_item(int(chave))
         except:
             print("Erro não foi recebido nenhum valor para remover da lista de pedidos")
@@ -131,9 +133,9 @@ def ports():
         print(int_ip)
         
         #hostnat(action, fw, protocol, ext_port, ext_ip, int_ip, int_port)
-        return redirect(url_for('views.ports', dicionario=pedidos , user=current_user))
+        return redirect(url_for('views.nat', dicionario=pedidos , user=current_user))
 
-    return render_template('ports.html', dicionario=pedidos , user=current_user)
+    return render_template('nat.html', dicionario=pedidos , user=current_user)
 
 
 
