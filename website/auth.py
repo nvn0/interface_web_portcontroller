@@ -20,13 +20,14 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user:
             if check_password_hash(user.password, password):
-                flash('Logged in successfully!', category='success')
+                flash('Login efetuado com sucesso!', category='success')
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
-                flash('Incorrect password, try again.', category='error')
+                # messagem de erro opcional, o admin do sistema deve decidir se quer usar ou nao
+                flash('Password incorreta', category='error') # pass incorreta
         else:
-            flash('Email does not exist.', category='error')
+            flash('Credencias incorretas ou nao registadas.', category='error') # email nao registado
 
     return render_template("login.html", user=current_user)
 
