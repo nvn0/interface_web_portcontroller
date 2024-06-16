@@ -8,6 +8,8 @@ from string import ascii_uppercase
 #from unixSocketConn import *
 #from teams_dm_req import *
 #from discord_dm import *
+#from sendemail import *
+
 
 views = Blueprint('views', __name__)
 
@@ -26,14 +28,16 @@ def req_for_port():
 
         teamsid = request.form.get('teams_id')
         discordid = request.form.get('discord_id')
+        email = request.form.get('email')
         
         print(protocol)
         print(int_port)
         print(int_ip)
         print(teamsid)
         print(discordid)
+        print(email)
         #pedidos[len(pedidos)+2] = [protocol, int_port, int_ip]
-        pedidos[count+1] = [protocol, int_port, int_ip, teamsid, discordid]
+        pedidos[count+1] = [protocol, int_port, int_ip, teamsid, discordid, email]
         print(pedidos)
         count += 1
 
@@ -48,6 +52,7 @@ def notificar(chave):
     try:
         Send_dm_teams(pedidos[chave][4])
         Send_dm_discord(pedidos[chave][5])
+        Send_email(pedidos[chave][6])
     except:
         print("Erro - Nao foi possivel enviar notificação")
 
@@ -69,8 +74,6 @@ def remove_item(chave):
 @login_required
 def home():
     
-    
-  
 
     if request.method == 'POST':
         cname = request.form.get('nome')
@@ -116,14 +119,6 @@ def nat():
         int_ip = request.form.get('int_ip')
         chave = request.form.get('key_to_remove')
         
-        
-        try:
-            notificar(int(chave))
-            remove_item(int(chave))
-        except:
-            print("Erro não foi recebido nenhum valor para remover da lista de pedidos")
-
-
         print(action)
         print(fw)
         print(protocol)
@@ -131,8 +126,20 @@ def nat():
         print(ext_ip)
         print(int_port)
         print(int_ip)
-        
+
+        # descomentar esta linha para enviar dados par o port controller
         #hostnat(action, fw, protocol, ext_port, ext_ip, int_ip, int_port)
+
+        try:
+            notificar(int(chave))
+            remove_item(int(chave))
+        except:
+            print("Erro não foi recebido nenhum valor para remover da lista de pedidos")
+
+
+
+        
+       
         return redirect(url_for('views.nat', dicionario=pedidos , user=current_user))
 
     return render_template('nat.html', dicionario=pedidos , user=current_user)
