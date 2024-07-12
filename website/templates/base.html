@@ -21,8 +21,9 @@
       <div class="navbar-nav">
         {% if user.is_authenticated %}
         <a class="nav-item nav-link" id="home" href="/">Home</a>
-        <a class="nav-item nav-link" id="nat" href="/nat">Nat Ports</a>
-        <a class="nav-item nav-link" id="FireWall" href="/firewall">System FireWall</a>
+        <a class="nav-item nav-link" id="nat" href="/nat">NAT Ports</a>
+        <a class="nav-item nav-link" id="vernat" href="/vernat">Ver associaçoes NAT</a>
+        <a class="nav-item nav-link" id="FireWall" href="/firewall">System Firewall</a>
         <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
         {% else %}
         <a class="nav-item nav-link" id="login" href="/login">Login</a>

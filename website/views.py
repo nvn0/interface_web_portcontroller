@@ -5,7 +5,11 @@ import json
 import random
 from string import ascii_uppercase
 
-#from unixSocketConn import *
+
+
+
+from .unixSocketConn import *
+
 #from teams_dm_req import *
 #from discord_dm import *
 #from sendemail import *
@@ -128,7 +132,7 @@ def nat():
         print(int_ip)
 
         # descomentar esta linha para enviar dados par o port controller
-        #hostnat(action, fw, protocol, ext_port, ext_ip, int_ip, int_port)
+        hostnat(action, fw, protocol, ext_port, ext_ip, int_ip, int_port)
 
         try:
             notificar(int(chave))
@@ -145,7 +149,30 @@ def nat():
     return render_template('nat.html', dicionario=pedidos , user=current_user)
 
 
+@views.route('/vernat', methods=['GET', 'POST']) # funcional para interagir com a função hostnat do unixsocket
+@login_required
+def vernat():
 
+    if request.method == 'POST':
+        
+        
+        external_ip = request.form.get('ext_ip')
+        
+
+        print(external_ip)
+        
+        # descomentar esta linha para enviar dados par o port controller
+        info = host_nat_ip_ports("Getipports", external_ip)
+
+       
+
+
+
+        
+       
+        return redirect(url_for('views.vernat', lista=info , user=current_user))
+
+    return render_template('vernat.html', dicionario=pedidos , user=current_user)
 
 
 
@@ -173,7 +200,7 @@ def firewall():
         print(port)
         print(type(port))
        
-        #hostfw(action, fw, protocol, port)
+        hostfw(action, fw, protocol, port)
     
         return redirect(url_for('views.firewall', user=current_user))
         

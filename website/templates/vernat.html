@@ -1,0 +1,104 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+
+
+<head>
+    <style>
+        .left-container {
+            margin-top: 0;
+            margin: 0;
+            padding: 0;
+            float: left;
+            width: 50%;
+            /* Ajuste conforme necessário */
+        }
+
+        .right-container {
+            display: flex;
+            justify-content: flex-end;
+            float: right;
+        }
+
+        .item-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .item-list li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<h1 align="left">Ver associaçoes de um IP</h1>
+
+
+<div class="right-container">
+    <div>
+        <h1>Info do IP:</h1>
+        <ul class="item-list">
+            {% for chave, valores in dicionario.items() %}
+            <li>
+                <strong>Pedido nº {{ chave }}:</strong>
+                <ul>
+                    <li>Protocolo: {{ valores[0] }}</li>
+                    <li>Porta interna do container: {{ valores[1] }}</li>
+                    <li>IP interno do container: {{ valores[2] }}</li>
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+
+<div class="left-container">
+
+    <form method="POST">
+        <div id="parameters-section">
+
+
+
+            <br><br>
+            <br><br>
+            <label>IP externo:</label>
+            <input type="text" id="ext_ip" name="ext_ip"
+                pattern="^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}$"
+                required>
+
+
+            <br><br>
+            <button type="submit" id="dados" class="btn btn-primary">Enviar Dados</button>
+        </div>
+    </form>
+
+</div>
+
+<script>
+    function validateForm() {
+
+        const extIp = document.getElementById("ext_ip").value;
+
+        if (!ext_ip) {
+            alert("Todos os campos devem ser preenchidos!");
+            return false;
+        }
+
+
+
+        return true;
+    }
+
+
+
+    window.onload = function () {
+        document.getElementById("ext_ip").value = '';
+
+    };
+
+
+</script>
+
+{% endblock %}
