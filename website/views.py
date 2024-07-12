@@ -17,6 +17,7 @@ from .unixSocketConn import *
 
 views = Blueprint('views', __name__)
 
+
 pedidos = {}
 count = 0
 
@@ -172,7 +173,7 @@ def vernat():
        
         return redirect(url_for('views.vernat', lista=info , user=current_user))
 
-    return render_template('vernat.html', dicionario=pedidos , user=current_user)
+    return render_template('vernat.html', lista=info , user=current_user)
 
 
 

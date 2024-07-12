@@ -4,7 +4,7 @@ import json
 import time
 
 
-print(os.getcwd())
+#print(os.getcwd())
 
 
 # Caminho do ficheiro do socket

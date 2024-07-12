@@ -38,13 +38,14 @@
     <div>
         <h1>Info do IP:</h1>
         <ul class="item-list">
-            {% for chave, valores in dicionario.items() %}
+            {% for item in dicionario %}
             <li>
-                <strong>Pedido nº {{ chave }}:</strong>
+                <strong>Pedido nº {{ loop.index }}:</strong>
                 <ul>
-                    <li>Protocolo: {{ valores[0] }}</li>
-                    <li>Porta interna do container: {{ valores[1] }}</li>
-                    <li>IP interno do container: {{ valores[2] }}</li>
+                    <li>Protocolo: {{ item['protocol'] }}</li>
+                    <li>Porta de escuta: {{ item['listen_port'] }}</li>
+                    <li>Porta interna do container: {{ item['target_port'] }}</li>
+                    <li>IP interno do container: {{ item['target_address'] }}</li>
                 </ul>
             </li>
             {% endfor %}
