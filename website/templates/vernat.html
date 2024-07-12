@@ -38,9 +38,9 @@
     <div>
         <h1>Info do IP:</h1>
         <ul class="item-list">
-            {% for item in dicionario %}
+            {% for item in lista %}
             <li>
-                <strong>Pedido nº {{ loop.index }}:</strong>
+                <strong>Associação nº {{ loop.index }}:</strong>
                 <ul>
                     <li>Protocolo: {{ item['protocol'] }}</li>
                     <li>Porta de escuta: {{ item['listen_port'] }}</li>

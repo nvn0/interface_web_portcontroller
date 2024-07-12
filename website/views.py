@@ -17,7 +17,7 @@ from .unixSocketConn import *
 
 views = Blueprint('views', __name__)
 
-
+info = []
 pedidos = {}
 count = 0
 
@@ -153,9 +153,9 @@ def nat():
 @views.route('/vernat', methods=['GET', 'POST']) # funcional para interagir com a função hostnat do unixsocket
 @login_required
 def vernat():
-
+    
     if request.method == 'POST':
-        
+        info.clear()
         
         external_ip = request.form.get('ext_ip')
         
@@ -163,10 +163,11 @@ def vernat():
         print(external_ip)
         
         # descomentar esta linha para enviar dados par o port controller
-        info = host_nat_ip_ports("Getipports", external_ip)
+        info_temp = host_nat_ip_ports("Getipports", external_ip)
 
        
-
+        for item in info_temp:
+            info.append(item)
 
 
         
