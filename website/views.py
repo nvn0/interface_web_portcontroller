@@ -172,9 +172,9 @@ def vernat():
 
         
        
-        return redirect(url_for('views.vernat', lista=info , user=current_user))
+        return redirect(url_for('views.vernat', lista=info , ip=external_ip, user=current_user))
 
-    return render_template('vernat.html', lista=info , user=current_user)
+    return render_template('vernat.html', lista=info, ip=external_ip , user=current_user)
 
 
 
