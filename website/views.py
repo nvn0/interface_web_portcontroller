@@ -191,10 +191,6 @@ def firewall():
         port = request.form.get('port')
        
     
-        
-        
-
-       
 
         print(action)
         print(fw)
